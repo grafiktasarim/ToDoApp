@@ -6,40 +6,77 @@
     <title>Uygulamada Açılıyor...</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             text-align: center;
-            padding-top: 50px;
-            background-color: #f4f4f9;
+            padding: 40px 20px;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .card {
+            background-color: #1e1e1e;
+            padding: 30px 20px;
+            border-radius: 16px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+        p {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 25px;
         }
         .btn {
-            display: inline-block;
-            padding: 12px 24px;
+            display: block;
+            width: 100%;
+            padding: 14px 0;
             background-color: #6200ee;
             color: white;
             text-decoration: none;
-            border-radius: 8px;
-            margin-top: 20px;
+            border-radius: 10px;
             font-weight: bold;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .btn:active {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
-    <h2>Listeye yönlendiriliyorsunuz...</h2>
-    <p>Uygulama otomatik açılmazsa aşağıdaki butona tıklayın:</p>
-    
-    <a id="openAppBtn" href="#" class="btn">Uygulamada Aç</a>
+    <div class="card">
+        <h2>Listeye yönlendiriliyorsunuz...</h2>
+        <p>Uygulama otomatik açılmazsa aşağıdaki butona tıklayın:</p>
+        
+        <a id="openAppBtn" href="#" class="btn">Uygulamada Aç</a>
+    </div>
 
     <script>
-    var searchParams = window.location.search;
+        (function() {
+            var searchParams = window.location.search;
+            
+            // 1. Doğrudan Custom Scheme (En hızlı çalışan yöntem)
+            var customSchemeUrl = "simpletodo://share" + searchParams;
+            
+            // 2. Android Intent Formatı (Yedek)
+            var intentUrl = "intent://share" + searchParams + "#Intent;scheme=simpletodo;package=com.aves.simpletodo;end";
 
-    // Android Chrome için intent formatı
-    var intentUrl = "intent://share" + searchParams + "#Intent;scheme=simpletodo;package=com.aves.simpletodo;end";
+            var btn = document.getElementById("openAppBtn");
 
-    // Butona bağlantıyı atayalım
-    document.getElementById("openAppBtn").href = intentUrl;
+            // Butona tıklandığında doğrudan custom scheme yönlendirmesi yap
+            btn.onclick = function(e) {
+                e.preventDefault();
+                window.location.href = customSchemeUrl;
+            };
 
-    // Sayfa açıldığında otomatik yönlendirelim
-    window.location.href = intentUrl;
-</script>
+            // Sayfa ilk açıldığında otomatik deneme yap
+            setTimeout(function() {
+                window.location.href = customSchemeUrl;
+            }, 300);
+        })();
+    </script>
 </body>
 </html>
