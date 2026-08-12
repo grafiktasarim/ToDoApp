@@ -58,21 +58,21 @@
         (function() {
             var searchParams = window.location.search;
             
-            // 1. Doğrudan Custom Scheme (En hızlı çalışan yöntem)
+            // 1. Doğrudan Custom Scheme
             var customSchemeUrl = "simpletodo://share" + searchParams;
             
-            // 2. Android Intent Formatı (Yedek)
+            // 2. Android Intent Formatı
             var intentUrl = "intent://share" + searchParams + "#Intent;scheme=simpletodo;package=com.aves.simpletodo;end";
 
             var btn = document.getElementById("openAppBtn");
 
-            // Butona tıklandığında doğrudan custom scheme yönlendirmesi yap
+            // Butona tıklandığında hem intent hem custom scheme dene
             btn.onclick = function(e) {
                 e.preventDefault();
                 window.location.href = customSchemeUrl;
             };
 
-            // Sayfa ilk açıldığında otomatik deneme yap
+            // Sayfa açıldığında otomatik yönlendirmeyi tetikle
             setTimeout(function() {
                 window.location.href = customSchemeUrl;
             }, 300);
