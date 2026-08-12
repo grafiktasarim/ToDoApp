@@ -30,11 +30,16 @@
     <a id="openAppBtn" href="#" class="btn">Uygulamada Aç</a>
 
     <script>
-        var searchParams = window.location.search;
-        var appUrl = "simpletodo://share" + searchParams;
+    var searchParams = window.location.search;
 
-        document.getElementById("openAppBtn").href = appUrl;
-        window.location.href = appUrl;
-    </script>
+    // Android Chrome için intent formatı
+    var intentUrl = "intent://share" + searchParams + "#Intent;scheme=simpletodo;package=com.aves.simpletodo;end";
+
+    // Butona bağlantıyı atayalım
+    document.getElementById("openAppBtn").href = intentUrl;
+
+    // Sayfa açıldığında otomatik yönlendirelim
+    window.location.href = intentUrl;
+</script>
 </body>
 </html>
